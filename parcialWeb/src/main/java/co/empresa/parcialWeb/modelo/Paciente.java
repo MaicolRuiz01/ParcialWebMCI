@@ -24,5 +24,11 @@ public class Paciente implements Serializable {
 	private String direccion;
 	private double peso;
 	private double estatura;
+	
+	
+	
+	
+	
+	
 
 }

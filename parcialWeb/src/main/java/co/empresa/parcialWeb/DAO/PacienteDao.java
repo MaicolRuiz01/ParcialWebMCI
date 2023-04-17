@@ -85,7 +85,7 @@ private static final String SELECT_ALL_PACIENTE = "SELECT * FROM paciente;";
 		
 		public List<Paciente> selectAll(){
 			
-			List <Paciente> paciente = new ArrayList<>();
+			List <Paciente> pacientes = new ArrayList<>();
 			
 			
 			try {
@@ -95,18 +95,25 @@ private static final String SELECT_ALL_PACIENTE = "SELECT * FROM paciente;";
 				
 				while(rs.next()) {
 					int id=rs.getInt("id");
-					String nombre= rs.getString("documento")
-					String nombre= rs.getString("nombre");
-					String pais= rs.getString("pais");
-					String email= rs.getString("email");
-					paciente.add(new Paciente(id,nombre,email,pais));
+					String documento= rs.getString("documento");
+					String nombre=rs.getString("nombre");
+					String apellido=rs.getString("apellido");
+					String email=rs.getString("email");
+					String genero=rs.getString("genero");
+					String fechanacimiento=rs.getString("fechanacimineot");
+					String telefono=rs.getString("telefono");
+					String direccion=rs.getString("direccion");
+					double peso=rs.getDouble("peso");
+					double estatura=rs.getDouble("estatura");
+					
+					pacientes.add(new Paciente(id, documento, nombre,apellido,email,genero, fechanacimiento, telefono, direccion, peso, estatura));
 				}
 				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			
-			return paciente;
+			return pacientes;
 		}
 		
 		public Paciente select(int id){
@@ -122,10 +129,17 @@ private static final String SELECT_ALL_PACIENTE = "SELECT * FROM paciente;";
 				
 				while(rs.next()) {
 					
-					String nombre= rs.getString("nombre");
-					String pais= rs.getString("pais");
-					String email= rs.getString("email");
-					paciente= new Paciente(id,nombre,email,pais);
+					String documento= rs.getString("documento");
+					String nombre=rs.getString("nombre");
+					String apellido=rs.getString("apellido");
+					String email=rs.getString("email");
+					String genero=rs.getString("genero");
+					String fechanacimiento=rs.getString("fechanacimineot");
+					String telefono=rs.getString("telefono");
+					String direccion=rs.getString("direccion");
+					double peso=rs.getDouble("peso");
+					double estatura=rs.getDouble("estatura");
+					paciente= new Paciente(id,documento, nombre,apellido,email,genero, fechanacimiento, telefono,direccion, peso, estatura);
 				}
 				
 			} catch (Exception e) {
