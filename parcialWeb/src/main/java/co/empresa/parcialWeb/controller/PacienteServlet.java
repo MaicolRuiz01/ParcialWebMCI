@@ -2,6 +2,7 @@ package co.empresa.parcialWeb.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import co.empresa.parcialWeb.DAO.PacienteDao;
+import co.empresa.parcialWeb.modelo.Paciente;
+
+
 
 
 /**
@@ -54,7 +58,7 @@ String action = request.getServletPath();
 				break;
 
 			case "/delete":
-				eliminarpaciente(request, response);
+				eliminarpacientes(request, response);
 				 
 				break;
 				
@@ -91,18 +95,57 @@ String action = request.getServletPath();
 		dispatcher.forward(request,response);
 	}
 	
-	public void insertarusuario(HttpServletRequest request,HttpServletResponse response) 
+	public void insertarpaciente(HttpServletRequest request,HttpServletResponse response) 
 			throws ServletException, IOException, SQLException{
 		
+		String documento= request.getParameter("documento");
 		String nombre=request.getParameter("nombre");
+		String apellido=request.getParameter("apellido");
 		String email=request.getParameter("email");
-		String pais=request.getParameter("pais");
+		String genero=request.getParameter("genero");
+		String fechanacimiento=request.getParameter("fechanacimineto");
+		String telefono=request.getParameter("telefono");
+		String direccion=request.getParameter("direccion");
+		String peso=request.getParameter("peso");
+		String estatura=request.getParameter("estatura");
 		
-		Paciente paciente= new Paciente(nombre,email,pais);
+		Paciente paciente= new Paciente(documento, nombre, apellido, email, genero, fechanacimiento, telefono, direccion, peso, estatura);
 		
 		pacienteDao.insert(paciente);
 		
 		response.sendRedirect("list");
+	}
+	
+	public void showEditForm(HttpServletRequest request, HttpServletResponse response) 
+			throws IOException, ServletException{
+		int id= Integer.parseInt(request.getParameter("id"));
+	      Paciente pacienteactual = pacienteDao.select(id);
+	      request.setAttribute("paciente", pacienteactual);
+	      
+		RequestDispatcher dispatcher = request.getRequestDispatcher("paciente.jsp");
+		dispatcher.forward(request,response);
+		
+	}
+	
+	public void eliminarpacientes(HttpServletRequest request,HttpServletResponse response) 
+			throws IOException, SQLException, SQLException{
+		int id= Integer.parseInt(request.getParameter("id"));
+		pacienteDao.delete(id);
+		response.sendRedirect("list");
+	}
+	
+	private void listPacientes(HttpServletRequest request,HttpServletResponse response) 
+			throws IOException,SQLException, ServletException{
+		List <Paciente> listPacientes = pacienteDao.selectAll();
+		request.setAttribute("listPacientes", listPacientes);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("pacientelist.jsp");
+		dispatcher.forward(request,response);
+
+	}
+	
+	public void actualizarpaciente(HttpServletRequest request,HttpServletResponse response) 
+			
 	}
 
 }
